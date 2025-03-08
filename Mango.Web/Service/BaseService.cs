@@ -4,10 +4,11 @@ using System.Net;
 using System.Text;
 
 using Newtonsoft.Json;
+using Mango.Web.Service.IService;
 
 namespace Mango.Web.Service
 {
-	public class BaseService
+	public class BaseService : IBaseService
 	{
 		private readonly IHttpClientFactory _httpClientFactory;
 
