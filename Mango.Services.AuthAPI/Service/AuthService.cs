@@ -6,6 +6,9 @@ using Mango.Services.AuthAPI.Models;
 using Mango.Services.AuthAPI.Models.Dto;
 using Mango.Services.AuthAPI.Service.IService;
 using Microsoft.AspNetCore.Identity;
+using Azure;
+using Microsoft.AspNetCore.Mvc;
+
 
 namespace Mango.Services.AuthAPI.Service
 {
@@ -28,10 +31,7 @@ namespace Mango.Services.AuthAPI.Service
             _roleManager = roleManager;
         }
 
-        public Task<LoginResponseDto> Login(LoginRequestDto loginRequestDto)
-        {
-            throw new NotImplementedException();
-        }
+
 
         public async Task<string> Register(RegistrationRequestDto registrationRequestDto)
         {
@@ -68,6 +68,36 @@ namespace Mango.Services.AuthAPI.Service
 
             }
             return "Error Encountered";
+        }
+
+        public async Task<LoginResponseDto> Login(LoginRequestDto loginRequestDto)
+        {
+            var user = _db.ApplicationUsers.FirstOrDefault(u => u.UserName.ToLower() == loginRequestDto.UserName.ToLower());
+
+            bool isValid = await _userManager.CheckPasswordAsync(user, loginRequestDto.Password);
+
+            if (user == null || isValid == false)
+            {
+                return new LoginResponseDto() { User = null, Token = "" };
+            }
+
+            //if user was found , Generate JWT Token
+
+            UserDto userDTO = new()
+            {
+                Email = user.Email,
+                ID = user.Id,
+                Name = user.Name,
+                PhoneNumber = user.PhoneNumber
+            };
+
+            LoginResponseDto loginResponseDto = new LoginResponseDto()
+            {
+                User = userDTO,
+                Token = ""
+            };
+
+            return loginResponseDto;
         }
     }
 }
