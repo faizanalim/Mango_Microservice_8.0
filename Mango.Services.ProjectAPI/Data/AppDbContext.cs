@@ -3,7 +3,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
-namespace Mango.Services.CouponAPI.Data
+namespace Mango.Services.ProductAPI.Data
 {
 	public class AppDbContext : DbContext
 	{
