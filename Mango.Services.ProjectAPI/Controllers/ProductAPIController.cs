@@ -9,7 +9,7 @@ namespace Mango.Services.ProjectAPI.Controllers
 {
     [Route("api/product")]
     [ApiController]
-  //  [Authorize]
+   [Authorize]
     public class ProductAPIController : Controller
     {
 
