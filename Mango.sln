@@ -26,6 +26,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mango.Services.EmailAPI", "Mango.Services.EmailAPI\Mango.Services.EmailAPI.csproj", "{E99716E7-0B9E-4C95-A493-EA0DD8999633}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mango.Services.Order.API", "Mango.Services.Order.API\Mango.Services.Order.API.csproj", "{C18BDCEA-9316-4BC9-81EA-AE407307B5D8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D4589A60-E1F8-420D-9F8C-79344E8816C9} = {D4589A60-E1F8-420D-9F8C-79344E8816C9}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
