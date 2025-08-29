@@ -3,11 +3,12 @@ using Mango.Services.Order.API.Data;
 using Mango.Services.Order.API.Models;
 using Mango.Services.Order.API.Models.Dto;
 using Mango.Services.Order.API.Utility;
-using Mango.Services.ShoppingCartAPI.Service;
-using Mango.Services.ShoppingCartAPI.Services;
+//using Mango.Services.ShoppingCartAPI.Service;
+//using Mango.Services.ShoppingCartAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Mango.Services.Order.API.Service.IService;
 
 namespace Mango.Services.OrderAPI.Controllers
 {
@@ -52,5 +53,11 @@ namespace Mango.Services.OrderAPI.Controllers
             }
             return _response;
         }
+
+        //[HttpGet]
+        //public IActionResult Get()
+        //{
+        //    return Ok("Order API is working!");
+        //}
     }
 }

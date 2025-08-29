@@ -3,15 +3,20 @@ using MessageBus;
 using Mango.Services.Order.API;
 using Mango.Services.Order.API.Data;
 using Mango.Services.Order.API.Extensions;
+//using Mango.Services.Order.API.Service.IService;
+//using Mango.Services.Order.API.Utility;
+//using Mango.Services.ShoppingCartAPI.Services;
+//using Mango.Services.ShoppingCartAPI.Services.IService;
 using Mango.Services.Order.API.Service.IService;
-using Mango.Services.Order.API.Utility;
-using Mango.Services.ShoppingCartAPI.Service;
+using Mango.Services.Order.API.Service;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using Mango.Services.Order.API.Utility;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +27,8 @@ builder.Services.AddDbContext<AppDbContext>(option =>
     option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
+Console.WriteLine(typeof(IProductService).Assembly.FullName);
+Console.WriteLine(typeof(ProductService).Assembly.FullName);
 builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IProductService, ProductService>();
@@ -34,8 +41,10 @@ new Uri(builder.Configuration["ServiceUrls:ProductAPI"])).AddHttpMessageHandler<
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen(option =>
 {
+    option.CustomSchemaIds(type => type.FullName);
     option.AddSecurityDefinition(name: JwtBearerDefaults.AuthenticationScheme, securityScheme: new OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -57,6 +66,7 @@ builder.Services.AddSwaggerGen(option =>
             }, new string[]{}
         }
     });
+
 });
 builder.AddAppAuthetication();
 
@@ -76,7 +86,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-ApplyMigration();
+//ApplyMigration();
 app.Run();
 
 

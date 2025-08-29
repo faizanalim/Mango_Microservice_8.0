@@ -3,7 +3,7 @@ using Mango.Services.Order.API.Service.IService;
 
 using Newtonsoft.Json;
 
-namespace Mango.Services.ShoppingCartAPI.Service
+namespace Mango.Services.Order.API.Service
 {
     public class ProductService : IProductService
     {
