@@ -16,6 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using Mango.Services.Order.API.Utility;
+using Stripe;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,11 +28,11 @@ builder.Services.AddDbContext<AppDbContext>(option =>
     option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
-Console.WriteLine(typeof(IProductService).Assembly.FullName);
-Console.WriteLine(typeof(ProductService).Assembly.FullName);
+//Console.WriteLine(typeof(IProductService).Assembly.FullName);
+//Console.WriteLine(typeof(ProductService).Assembly.FullName);
 builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IProductService, Mango.Services.Order.API.Service.ProductService>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<BackendApiAuthenticationHttpClientHandler>();
 
@@ -80,7 +81,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
