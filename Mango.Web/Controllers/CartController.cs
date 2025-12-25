@@ -114,5 +114,10 @@ namespace Mango.Web.Controllers
             }
             return new CartDto();
         }
+
+        public async Task<IActionResult> Confirmation(int orderId)
+        {
+            return View(orderId);
+        }
     }
 }
